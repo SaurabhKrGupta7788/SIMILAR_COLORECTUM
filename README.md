@@ -1,4 +1,4 @@
-﻿# SIMILAR_COLORECTUM: Mask-Guided Multiple Instance Learning for Colorectal Cancer
+# SIMILAR_COLORECTUM: Mask-Guided Multiple Instance Learning for Colorectal Cancer
 
 > **🏆 Published Research**: Accepted for the *Proceedings of Sixth Emerging Trends and Technologies on Intelligent Systems (ETTIS 2026)*, published by **Springer Nature Singapore Pte Ltd.**
 > **Title**: Mask-Guided Multiple Instance Learning for Patient-Level Colorectal Cancer Classification from CT Imaging.
@@ -7,7 +7,7 @@ This repository hosts the official codebase for utilizing Multiple Instance Lear
 
 ## Architecture Overview
 
-\\\
+```text
 Patient CT Scan Volume
     │
     ▼
@@ -36,7 +36,7 @@ Patient CT Scan Volume
 ┌───────────────────────────────────────┐
 │  Explainability (Grad-CAM)            │ ← Visualizes diagnostic hotspots
 └───────────────────────────────────────┘
-\\\
+```
 
 ## System Output
 
@@ -50,18 +50,17 @@ The system generates both classification metrics and explainability maps:
 
 ## Directory Structure
 
-\\\
+```text
+SIMILAR_COLORECTUM/
 ├── Branch_MIL.ipynb            # Implementation of branched MIL architecture
 ├── MIL.ipynb                   # Baseline Multiple Instance Learning pipeline
 ├── MIL_(PCA_NoPCA).ipynb       # Feature dimensionality reduction comparisons
 ├── MIL_Aug(PCA_NoPCA).ipynb    # Data augmentation strategies combined with PCA
 ├── Grad_Cam.ipynb              # Explainability and visual heatmap generation
 ├── visualisaation.ipynb        # Data visualization and metric plotting
-│
 ├── mil_aug_topk_Xy_binary.csv  # Serialized metrics/dataset mappings
-├── mil_weighted_Xy_binary.csv  # Weighted instances mappings
-└── README.md                   # Project documentation
-\\\
+└── mil_weighted_Xy_binary.csv  # Weighted instances mappings
+```
 
 ## How to Run
 
@@ -73,23 +72,23 @@ The system generates both classification metrics and explainability maps:
 
 ### 2. Install Dependencies
 
-\\\ash
+```bash
 pip install torch torchvision numpy pandas scikit-learn opencv-python matplotlib jupyter
-\\\
+```
 
 ### 3. Run the Application
 Since this is a research repository, the code is structured sequentially in notebooks.
 1. Open the repository in Jupyter Notebook:
-   \\\ash
+   ```bash
    jupyter notebook
-   \\\
-2. Start with \MIL.ipynb\ to understand the baseline extraction and aggregation process.
-3. Move to \MIL_Aug(PCA_NoPCA).ipynb\ to run the advanced pipeline (the core of the paper).
-4. Run \Grad_Cam.ipynb\ on trained model weights to generate interpretability heatmaps.
+   ```
+2. Start with `MIL.ipynb` to understand the baseline extraction and aggregation process.
+3. Move to `MIL_Aug(PCA_NoPCA).ipynb` to run the advanced pipeline (the core of the paper).
+4. Run `Grad_Cam.ipynb` on trained model weights to generate interpretability heatmaps.
 
 ## Key Design Decisions
 
 1. **Patient-Level MIL Formulation**: CT scans contain thousands of slices/patches, most of which are healthy even in cancer patients. Framing this as a Multiple Instance Learning (MIL) problem where the patient is a "bag" of patches solves the severe spatial label sparsity problem.
 2. **Mask-Guided Extraction**: Instead of blind tiling, patches are extracted using segmentation masks, forcing the MIL attention mechanism to focus purely on relevant anatomical structures rather than background noise.
-3. **PCA Feature Reduction**: High-dimensional CNN embeddings for thousands of patches per patient can exhaust memory. The \(PCA_NoPCA)\ notebooks demonstrate that dimensionality reduction drastically improves training efficiency while maintaining diagnostic accuracy.
-4. **Grad-CAM Explainability**: In medical imaging, trust is critical. \Grad_Cam.ipynb\ is intentionally separated to ensure every confident prediction can be visually audited by an oncologist.
+3. **PCA Feature Reduction**: High-dimensional CNN embeddings for thousands of patches per patient can exhaust memory. The `(PCA_NoPCA)` notebooks demonstrate that dimensionality reduction drastically improves training efficiency while maintaining diagnostic accuracy.
+4. **Grad-CAM Explainability**: In medical imaging, trust is critical. `Grad_Cam.ipynb` is intentionally separated to ensure every confident prediction can be visually audited by an oncologist.
